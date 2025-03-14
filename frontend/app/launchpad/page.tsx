@@ -90,7 +90,7 @@ const Launchpad = () => {
                     <div className="h-12 w-12 rounded-full bg-teal-600"></div>
                     <div className="">
                       <h4 className="text-gray-800">BLT TOKEN</h4>
-                      <p className="text-sm text-gray-400">300000000</p>
+                      <p className="text-sm text-gray-400">{token?.name}</p>
                     </div>
                   </div>
 
@@ -98,7 +98,10 @@ const Launchpad = () => {
                     className="my-4 bg-teal-800/20 rounded-lg py-1 text-gray-500 px-3 text-sm flex justify-between cursor-pointer"
                     onClick={() => onCopy(token?.tokenAddress)}
                   >
-                    {`${token?.tokenAddress.slice(0, 8)}...${token?.tokenAddress.slice(-6)}`}
+                    {`${token?.tokenAddress.slice(
+                      0,
+                      8
+                    )}...${token?.tokenAddress.slice(-6)}`}
 
                     <span className="">
                       <svg
