@@ -11,13 +11,8 @@ const Launchpad = () => {
   const [activeFormTab, setActiveFormTab] = useState("erc20");
 
   const { tokens, isPending, refetchTokens } = useGetErc20s();
+  console.log("tokenss", tokens);
 
-  useEffect(() => {
-    if(tokens) {
-      
-    }
-    console.log(tokens)
-  }, [tokens])
   const { nfts, loadingnft, refetchNfts } = useGetErc721();
 
   const onCopy = (address: string) => {
@@ -34,7 +29,9 @@ const Launchpad = () => {
   return (
     <main className="container mx-auto px-20">
       <nav className="flex justify-between items-center py-6">
-        <h2 className="text-lg">launch<span className="text-gray-400">pad</span>.</h2>
+        <h2 className="text-lg">
+          launch<span className="text-gray-400">pad</span>.
+        </h2>
 
         <div className="">
           <ConnectButton />
@@ -99,9 +96,9 @@ const Launchpad = () => {
 
                   <div
                     className="my-4 bg-teal-800/20 rounded-lg py-1 text-gray-500 px-3 text-sm flex justify-between cursor-pointer"
-                    onClick={() => onCopy(token)}
+                    onClick={() => onCopy(token?.tokenAddress)}
                   >
-                    {`${token.slice(0, 8)}...${token.slice(-6)}`}
+                    {`${token?.tokenAddress.slice(0, 8)}...${token?.tokenAddress.slice(-6)}`}
 
                     <span className="">
                       <svg
@@ -122,7 +119,7 @@ const Launchpad = () => {
                   </div>
 
                   <a
-                    href={`https://sepolia.etherscan.io/address/${token}`}
+                    href={`https://sepolia.etherscan.io/address/${token?.tokenAddress}`}
                     target="_blank"
                     className="flex text-sm text-teal-800 font-medium items-center gap-2 cursor-pointer"
                   >
