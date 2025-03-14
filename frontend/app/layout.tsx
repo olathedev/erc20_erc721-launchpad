@@ -1,13 +1,16 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Outfit, Poppins } from "next/font/google";
 import "./globals.css";
+import CustomRainbowKitProvider from "@/providers/RainbowKitProvider";
+import { Toaster } from "react-hot-toast";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const geistSans = Poppins({
+  variable: "--font-poppins",
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
+const outfit = Outfit({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
@@ -24,10 +27,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+      <body className={`${geistSans.variable} ${outfit.className} antialiased`}>
+        <CustomRainbowKitProvider>{children}</CustomRainbowKitProvider>
+        <Toaster />
       </body>
     </html>
   );

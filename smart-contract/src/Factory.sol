@@ -5,8 +5,21 @@ import "../src/tokens/Owo.sol";
 import "./tokens/Nft.sol";
 
 contract ERC20Factory {
-    address[] public createdTokens;
-    address[] public createdERC721Tokens;
+    struct TokenDetails {
+        string name;
+        string symbol;
+        address tokenAddress;
+    }
+
+    struct ERC721TokenDetails {
+        string name;
+        string symbol;
+        address tokenAddress;
+    }
+
+    mapping(address => TokenDetails[]) public userTokens;
+
+    mapping(address => ERC721TokenDetails[]) public userERC721Tokens;
 
     uint256 public erc20TokenCount;
     uint256 public erc721TokenCount;
@@ -17,7 +30,13 @@ contract ERC20Factory {
         string symbol,
         uint256 initialSupply
     );
-    event ERC721TokenCreated(address tokenAddress, string name, string symbol);
+
+    event ERC721TokenCreated(
+        address indexed creator,
+        string name,
+        string symbol,
+        address tokenAddress
+    );
 
     function createToken(
         string memory name,
@@ -30,23 +49,40 @@ contract ERC20Factory {
             initialSupply,
             msg.sender
         );
-        createdTokens.push(address(token));
+
+        userTokens[msg.sender].push(
+            TokenDetails({
+                name: name,
+                symbol: symbol,
+                tokenAddress: address(token)
+            })
+        );
         erc20TokenCount++;
         emit TokenCreated(address(token), name, symbol, initialSupply);
     }
 
     function createERC721(string memory name, string memory symbol) public {
         MyNFT token = new MyNFT(name, symbol);
-        createdERC721Tokens.push(address(token));
+        userERC721Tokens[msg.sender].push(
+            ERC721TokenDetails({
+                name: name,
+                symbol: symbol,
+                tokenAddress: address(token)
+            })
+        );
         erc721TokenCount++;
-        emit ERC721TokenCreated(address(token), name, symbol);
+        emit ERC721TokenCreated(msg.sender, name, symbol, address(token));
     }
 
-    function getDeployedTokens() public view returns (address[] memory) {
-        return createdTokens;
+    function getTokensByUser(
+        address user
+    ) public view returns (TokenDetails[] memory) {
+        return userTokens[user];
     }
 
-    function getDeployedERC721Tokens() public view returns (address[] memory) {
-        return createdERC721Tokens;
+    function getERC721TokensByUser(
+        address user
+    ) public view returns (ERC721TokenDetails[] memory) {
+        return userERC721Tokens[user];
     }
 }
