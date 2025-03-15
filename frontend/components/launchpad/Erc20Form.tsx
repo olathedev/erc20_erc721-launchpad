@@ -12,6 +12,9 @@ const Erc20Form = ({ refetch }: { refetch: () => void }) => {
 
   useEffect(() => {
     if (hash) {
+      setTokenName("");
+      setInitialSupply("");
+      setTokenSymbol("");
       refetch();
     }
   }, [hash]);
@@ -22,7 +25,7 @@ const Erc20Form = ({ refetch }: { refetch: () => void }) => {
       alert("connect wallet");
       return;
     }
-    const supply = BigInt(initialSupply);
+    const supply = BigInt(initialSupply) * BigInt(10 ** 18);
 
     const data = {
       tokenName,
@@ -30,11 +33,7 @@ const Erc20Form = ({ refetch }: { refetch: () => void }) => {
       supply,
     };
     await createErc20(data);
-    setTokenName("");
-    setInitialSupply("");
-    setTokenSymbol("");
-
-    refetch();
+    // refetch();
 
     console.log({ tokenName, tokenSymbol, initialSupply });
   };

@@ -30,7 +30,11 @@ export const useGetErc721 = () => {
 
   const { data, isPending, error, refetch } = useReadContract({
     ...wagmiContractConfig,
-    functionName: "getDeployedERC721Tokens",
+    functionName: "getERC721TokensByUser",
+    args: [address],
+    query: {
+      enabled: !!address,
+    },
   });
 
   return {

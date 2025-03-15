@@ -28,7 +28,7 @@ const Launchpad = () => {
 
   return (
     <main className="container mx-auto px-20">
-      <nav className="flex justify-between items-center py-6">
+      <nav className="flex justify-between items-center py-6 sticky top-0 bg-white">
         <h2 className="text-lg">
           launch<span className="text-gray-400">pad</span>.
         </h2>
@@ -73,7 +73,7 @@ const Launchpad = () => {
         <span>Nfts</span>
       </div>
 
-      <div className="w-full">
+      <div className="w-full pb-20  ">
         {}
         {isPending ? (
           <div className="">Loading...</div>
@@ -83,14 +83,22 @@ const Launchpad = () => {
               // @ts-ignore
               tokens?.map((token: any, index: number) => (
                 <div
-                  className="bg-white border border-gray-100 sh p-4 rounded-xl"
+                  className="bg-white border border-gray-200 sh p-4 rounded-xl"
                   key={index}
                 >
                   <div className="flex gap-3 ">
-                    <div className="h-12 w-12 rounded-full bg-teal-600"></div>
+                    <div className="h-12 w-12 rounded-full bg-teal-600 flex items-center justify-center text-white font-bold">
+                      {token?.name
+                        ?.split(" ")
+                        .slice(0, 2)
+                        .map((word: any) => word[0])
+                        .join("")}
+                    </div>
                     <div className="">
-                      <h4 className="text-gray-800">BLT TOKEN</h4>
-                      <p className="text-sm text-gray-400">{token?.name}</p>
+                      <h4 className="text-gray-800 capitalize">
+                        {token?.name}
+                      </h4>
+                      <p className="text-sm text-gray-400">{token?.symbol}</p>
                     </div>
                   </div>
 
